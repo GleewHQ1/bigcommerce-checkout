@@ -1,5 +1,5 @@
-// Custom BigCommerce Checkout Script with Global Address Fields
-window.addEventListener('load', function () {
+// Updated: Waits for BigCommerce checkout to fully load before inserting fields
+setTimeout(function () {
   const waitForElement = (selector, callback) => {
     const interval = setInterval(() => {
       const el = document.querySelector(selector);
@@ -7,11 +7,11 @@ window.addEventListener('load', function () {
         clearInterval(interval);
         callback(el);
       }
-    }, 300);
+    }, 500);
   };
 
-  waitForElement('#checkoutShippingAddress', () => {
-    const form = document.querySelector('#checkoutShippingAddress');
+  waitForElement('[data-test="shipping-address-form"]', () => {
+    const form = document.querySelector('[data-test="shipping-address-form"]');
 
     const fieldGroup = document.createElement('div');
     fieldGroup.innerHTML = `
@@ -31,4 +31,4 @@ window.addEventListener('load', function () {
 
     form.appendChild(fieldGroup);
   });
-});
+}, 1000); // Wait 1 second before running
